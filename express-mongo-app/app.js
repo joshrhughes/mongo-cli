@@ -18,7 +18,7 @@ mongo.connect(url, function(err, db){
   console.log("3. Birch & Barley");
   console.log("4. Captain Cookie and the Milk Man");
   console.log("5. J's Cookies");
-  var name = prompt("Type the number of a resturant and press enter to display it's info: ");
+  var name = prompt("Type the number of a resturant and press enter to display it's info or create a new entry by typing 'new': ");
     if(name == "1"){
       collection.find({ "name": "Cookies Corner" }).toArray(function (err, doc) {
       console.log(doc);
@@ -44,4 +44,20 @@ mongo.connect(url, function(err, db){
         console.log(doc);
       });
     }
+    if (name == "new"){
+      var newName = prompt("Resturant Name: ");
+      var newStreet = prompt("Street Address: ");
+      var newZip = prompt("Zip Code: "); 
+      var newYelp = prompt("Yelp Web Address: ");
+      collection.insert([{name: newName, address: {street: newStreet, zip: newZip}, yelp: newYelp}]);
+      console.log("You Did It! Reboot and type 'all' to see your new addition");
+    }
+    if(name == "all"){
+      collection.find().toArray(function(err, doc){
+        console.log(doc);
+      });
+    }
+    // else{
+    //   console.log("That wasn't an option...");
+    // }
 });
